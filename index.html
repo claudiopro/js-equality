@@ -22,60 +22,32 @@
 					<th>NaN</th>
 					<th>false</th>
 					<th>Infinity</th>
+					<th>[]</th>
+					<th>{}</th>
 				</tr>
 				<tr>
 					<th>0</th>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
 				</tr>
 				<tr>
 					<th>null</th>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
 				</tr>
 				<tr>
 					<th>undefined</th>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
 				</tr>
 				<tr>
 					<th>NaN</th>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
 				</tr>
 				<tr>
 					<th>false</th>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
 				</tr>
 				<tr>
 					<th>Infinity</th>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+				</tr>
+				<tr>
+					<th>[]</th>
+				</tr>
+				<tr>
+					<th>{}</th>
 				</tr>
 			</table>
 
@@ -83,88 +55,63 @@
 			<p>Strict equality skips the type cast. Note that <code>NaN</code> is strictly different from itself.</p>
 			<table class="table table-bordered" id="triple-equal">
 				<tr>
-					<th>===</th>
+					<th>==</th>
 					<th>0</th>
 					<th>null</th>
 					<th>undefined</th>
 					<th>NaN</th>
 					<th>false</th>
 					<th>Infinity</th>
+					<th>[]</th>
+					<th>{}</th>
 				</tr>
 				<tr>
 					<th>0</th>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
 				</tr>
 				<tr>
 					<th>null</th>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
 				</tr>
 				<tr>
 					<th>undefined</th>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
 				</tr>
 				<tr>
 					<th>NaN</th>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
 				</tr>
 				<tr>
 					<th>false</th>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
 				</tr>
 				<tr>
 					<th>Infinity</th>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+				</tr>
+				<tr>
+					<th>[]</th>
+				</tr>
+				<tr>
+					<th>{}</th>
 				</tr>
 			</table>
 		</div>
 	</body>
 	<script>
 		function cmp(h, v, i, j, op) {
-			return eval(h[i].innerHTML.concat(op).concat(v[j].innerHTML));
+			var s = '('.concat(h[i].innerHTML).concat(')').concat(op).concat('(').concat(v[j].innerHTML).concat(')');
+			// console.log(s);
+			return eval(s);
 		}
 
 		function scan(id, op) {
 			var t = document.querySelector(id),
 				h = t.querySelectorAll('tr:nth-child(1) th'),
 				v = t.querySelectorAll('tr th:nth-child(1)'),
-				d = t.querySelectorAll('td'),
+				e = t.querySelectorAll('tr'),
 				l = h.length,
 				m = v.length,
 				i, j, s, r;
 			
 			for (i = 1; i < l; i++) {
 				for (j = 1; j < m; j++) {
-					r = d[(l - 1) * (i - 1) + j - 1];
+					r = document.createElement('td');
+					e[i].appendChild(r);
 					s = cmp(h, v, i, j, op);
 					r.innerHTML = s;
 					r.className = s ? 'success' : 'danger';
