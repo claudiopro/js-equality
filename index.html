@@ -14,107 +14,55 @@
 			<h2>Loose Equality</h2>
 			<p>Loose equality performs a type cast, so <code>false == 0</code>, and <code>null == undefined</code>.</p>
 			<table class="table table-bordered" id="double-equal">
-				<tr>
-					<th>==</th>
-					<th>0</th>
-					<th>null</th>
-					<th>undefined</th>
-					<th>NaN</th>
-					<th>false</th>
-					<th>Infinity</th>
-					<th>[]</th>
-					<th>{}</th>
-				</tr>
-				<tr>
-					<th>0</th>
-				</tr>
-				<tr>
-					<th>null</th>
-				</tr>
-				<tr>
-					<th>undefined</th>
-				</tr>
-				<tr>
-					<th>NaN</th>
-				</tr>
-				<tr>
-					<th>false</th>
-				</tr>
-				<tr>
-					<th>Infinity</th>
-				</tr>
-				<tr>
-					<th>[]</th>
-				</tr>
-				<tr>
-					<th>{}</th>
-				</tr>
+				<tbody/>
 			</table>
 
 			<h2>Strict Equality</h2>
 			<p>Strict equality skips the type cast. Note that <code>NaN</code> is strictly different from itself.</p>
 			<table class="table table-bordered" id="triple-equal">
-				<tr>
-					<th>==</th>
-					<th>0</th>
-					<th>null</th>
-					<th>undefined</th>
-					<th>NaN</th>
-					<th>false</th>
-					<th>Infinity</th>
-					<th>[]</th>
-					<th>{}</th>
-				</tr>
-				<tr>
-					<th>0</th>
-				</tr>
-				<tr>
-					<th>null</th>
-				</tr>
-				<tr>
-					<th>undefined</th>
-				</tr>
-				<tr>
-					<th>NaN</th>
-				</tr>
-				<tr>
-					<th>false</th>
-				</tr>
-				<tr>
-					<th>Infinity</th>
-				</tr>
-				<tr>
-					<th>[]</th>
-				</tr>
-				<tr>
-					<th>{}</th>
-				</tr>
+				<tbody/>
 			</table>
 		</div>
 	</body>
 	<script>
-		function cmp(h, v, i, j, op) {
-			var s = '('.concat(h[i].innerHTML).concat(')').concat(op).concat('(').concat(v[j].innerHTML).concat(')');
+		var SYMBOLS = ['0', 'null', 'undefined', 'NaN', 'false', 'Infinity', '[]', '{}'];
+
+		function cmp(i, j, op) {
+			var s = '('.concat(SYMBOLS[i - 1]).concat(')').concat(op).concat('(').concat(SYMBOLS[j - 1]).concat(')');
 			// console.log(s);
 			return eval(s);
 		}
 
 		function scan(id, op) {
 			var t = document.querySelector(id),
-				h = t.querySelectorAll('tr:nth-child(1) th'),
-				v = t.querySelectorAll('tr th:nth-child(1)'),
-				e = t.querySelectorAll('tr'),
-				l = h.length,
-				m = v.length,
-				i, j, s, r;
+				b = t.querySelector('tbody'),
+				l = SYMBOLS.length,
+				m = SYMBOLS.length,
+				e, i, j, s, r;
 			
-			for (i = 1; i < l; i++) {
-				for (j = 1; j < m; j++) {
-					r = document.createElement('td');
-					e[i].appendChild(r);
-					s = cmp(h, v, i, j, op);
-					r.innerHTML = s;
-					r.className = s ? 'success' : 'danger';
+			for (i = 0; i <= l; i++) {
+				e = document.createElement('tr');
+				b.appendChild(e);
+				if (i === 0) {
+					r = document.createElement('th');
+					r.innerHTML = op;
+					e.appendChild(r);
+					for (j = 1; j <= m; j++) {
+						r = document.createElement('th');
+						r.innerHTML = SYMBOLS[j - 1];
+						e.appendChild(r);
+					}
+				} else {
+					r = document.createElement('th');
+					r.innerHTML = SYMBOLS[i - 1];
+					e.appendChild(r);
+					for (j = 1; j <= m; j++) {
+						r = document.createElement('td');
+						s = cmp(i, j, op);
+						r.innerHTML = s;
+						r.className = s ? 'success' : 'danger';
+						e.appendChild(r);
+					}
 				}
 			}
 		}
