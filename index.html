@@ -11,10 +11,11 @@
 			<h1>JS Equality</h1>
 			<p>This page shows the result of loose and strict equality operators applied to special JavaScript values.</p>
 
-			<h2>==</h2>
+			<h2>Loose Equality</h2>
+			<p>Loose equality performs a type cast, so <code>false == 0</code>, and <code>null == undefined</code>.</p>
 			<table class="table table-bordered" id="double-equal">
 				<tr>
-					<th></th>
+					<th>==</th>
 					<th>0</th>
 					<th>null</th>
 					<th>undefined</th>
@@ -63,10 +64,11 @@
 				</tr>
 			</table>
 
-			<h2>===</h2>
+			<h2>Strict Equality</h2>
+			<p>Strict equality skips the type cast. Note that <code>NaN</code> is strictly different from itself.</p>
 			<table class="table table-bordered" id="triple-equal">
 				<tr>
-					<th></th>
+					<th>===</th>
 					<th>0</th>
 					<th>null</th>
 					<th>undefined</th>
